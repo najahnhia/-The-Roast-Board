@@ -15,6 +15,16 @@ function getLevel(points) {
 
 const STATE_KEY = "roastboard-state-v2";
 
+const storage = window.storage || {
+  async get(key) {
+    return { value: window.localStorage.getItem(key) };
+  },
+  async set(key, value) {
+    window.localStorage.setItem(key, value);
+    return true;
+  },
+};
+
 function uid() {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 }
@@ -110,7 +120,7 @@ export default function RoastBoard() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await window.storage.get(STATE_KEY, true);
+        const res = await storage.get(STATE_KEY, true);
         if (res && res.value) {
           setState({ profiles: [], posts: [], comments: [], reportedIds: [], ...JSON.parse(res.value) });
         }
@@ -131,7 +141,7 @@ export default function RoastBoard() {
   async function persist(next) {
     setState(next);
     try {
-      const ok = await window.storage.set(STATE_KEY, JSON.stringify(next), true);
+      const ok = await storage.set(STATE_KEY, JSON.stringify(next), true);
       if (!ok) setSaveError(true);
       else setSaveError(false);
     } catch (e) {
