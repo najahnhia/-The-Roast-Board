@@ -13,6 +13,8 @@ Create a production build with `npm run build` and preview it with `npm run prev
 
 ## Publish
 
-The included GitHub Actions workflow deploys automatically to GitHub Pages whenever `main` is updated. Enable Pages in the repository settings with **GitHub Actions** as the source, then open:
+This project is set up to build and deploy on Netlify (`netlify.toml` runs `npm run build` and publishes the `dist` folder). Connecting the repository to a Netlify site deploys it automatically on every push to `main`.
+
+A GitHub Actions workflow is also included, which deploys to GitHub Pages whenever `main` is updated. Enable Pages in the repository settings with **GitHub Actions** as the source, then open:
 
 `https://najahnhia.github.io/-The-Roast-Board/`
